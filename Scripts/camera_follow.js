@@ -29,9 +29,9 @@ function FixedUpdate () {
 
 		if(playerScript.CameraChangeLeft){
 			wantedPosition = target.TransformPoint(5, 3, -20);
-			transform.position = Vector3.Slerp (transform.position, wantedPosition, Time.deltaTime * smooth);
+			transform.position = Vector3.Slerp(transform.position, wantedPosition, Time.deltaTime * 2);
 		}else {
-			transform.position = Vector3.Slerp (transform.position, wantedPosition, Time.deltaTime * 1);
+			transform.position = Vector3.Slerp(transform.position, wantedPosition, Time.deltaTime * 0.9);
 		}
 	}
 }

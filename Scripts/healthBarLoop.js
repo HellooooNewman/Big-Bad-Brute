@@ -6,7 +6,7 @@ var timer : float = 1.0;
 function Update () {
 	var image : UI.RawImage = new gameObject.GetComponent("RawImage");
 
-	timer += 0.001;
+	timer += 0.002;
 
 	var pointa : Vector2;
 

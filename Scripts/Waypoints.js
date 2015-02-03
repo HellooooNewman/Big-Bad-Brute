@@ -20,7 +20,7 @@ function Awake(){
 
 function OnDrawGizmos(){
 	Gizmos.color = Color.red;
-	Gizmos.DrawCube(transform.position, new Vector3(0.5, 0.5, 0.5));
+	Gizmos.DrawCube(transform.position, Vector3(0.5, 0.5, 0.5));
 	
 	if(next){
 		Gizmos.color = Color.green;

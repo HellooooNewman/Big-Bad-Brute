@@ -6,10 +6,7 @@ function OnTriggerEnter(other : Collider){
 
 	if(other.tag == "Player"){
 		var GUIScript : scoreManager = FindObjectOfType(scoreManager);
-		GUIScript.incomingScore = 10.0;
+		GUIScript.incomingScore = pointAmount;
 		Destroy(this.gameObject);
 	}
-
-	
-
 }

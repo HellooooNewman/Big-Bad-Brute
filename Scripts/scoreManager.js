@@ -5,19 +5,18 @@ var startTimerUI : UI.Text;
 var livesUI : UI.Text;
 var scoreUI : UI.Text;
 var gameOverUI : UI.Text;
+var killCountUI : UI.Text;
 
+//Health
 var health : float;
 var healthTotal : float;
 var HealthBar : RectTransform;
 var healthScript : Canvas;
 
 var gameUI : Canvas;
-
 var gameOverScreen : Canvas;
 private var resume : RectTransform;
 public var pauseToggle : boolean = true;
-
-
 
 var lives : int;
 
@@ -36,6 +35,8 @@ var gameStart : boolean = false;
 var incomingScore : float;
 var score : float;
 
+var killCount : int;
+
 
 
 //wanted levels
@@ -53,6 +54,8 @@ function Update(){
     pauseToggle = !pauseToggle;
   }
 
+  //-------------Pause Game-------------//
+
   if(pauseToggle){
     Time.timeScale = 1;
     gameUI.enabled = true;
@@ -63,10 +66,8 @@ function Update(){
     gameUI.enabled = false;
     gameOverScreen.enabled = true;
     gameOverUI.text = "Pause";
+    killCountUI.enabled = false;
   }
-
-
-
 
   var playerScript : player_controller = FindObjectOfType(player_controller);
 
@@ -77,6 +78,7 @@ function Update(){
   } else if(wantedLevels==2){
 
   }
+
 
   //-------------Score-------------//
 
@@ -110,7 +112,6 @@ function Update(){
     score = score + incomingScore;
     scoreUI.text = "Score: " + score;
     incomingScore = 0;
-
   }
 
 
@@ -131,6 +132,7 @@ function Update(){
     livesUI.enabled = false;
     scoreUI.enabled = false;
     gameOverScreen.enabled = false;
+    killCountUI.enabled = false;
   }
 
   //5 seconds before the game starts to give the player some time
@@ -141,8 +143,6 @@ function Update(){
 
     healthScript.enabled = true;
     scoreUI.enabled = true;
-
-
 
     startTimerUI.enabled = false;
     timerUI.fontSize = 24;
@@ -170,6 +170,10 @@ function Update(){
       timerUI.text = "Time: " + gameTimer;
     }
 
+    //-------------Kill Count-------------//
+    killCountUI.enabled = true;
+    killCountUI.text = "Kills: " + killCount;
+
     //-------------Health-------------//
 
     health = playerScript.playerHealth;
@@ -186,8 +190,10 @@ function Update(){
     livesUI.text = "Lives: " + lives;
   }
 
-  //-------------Game Over-------------//
 
+
+
+  //-------------Game Over-------------//
   //if the player runs out of lives or the time runs out then the game is over
   if(playerScript.playerLives<=0 || timer<=0){
     gameOverUI.text = "Game Over";
@@ -198,10 +204,6 @@ function Update(){
     resume.anchoredPosition3D = Vector3(0,100000,0);
     
   }
-}
-
-function Restart(){
-  Debug.Log("restart");
 }
 
 function WantedStars(stars){

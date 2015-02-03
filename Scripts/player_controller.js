@@ -29,6 +29,8 @@ public var doubleJumpHeight : float;
 var onLadder : boolean = false;
 var weapon : GameObject;
 
+var cameraShaker : GameObject;
+
 var attacking : boolean = false;
 
 var dustDirection : boolean;
@@ -54,7 +56,6 @@ function save(){
 	var saveTime = GUIScript.timer;
 	PlayerPrefs.SetInt("Time", saveTime);
 	PlayerPrefs.Save();
-	Debug.Log(saveTime);
 }
 
 function Update () {
@@ -146,12 +147,32 @@ function Update () {
 			Debug.Log('owwwww');
 		}
 
-		if(Input.GetKeyDown("e")){
-			attacking = true;
-			weapon.collider.enabled = true;
+
+
+		//---------------Attack-------------//
+
+		var attackDelay  = 1.0;
+ 		var nextDamageEvent : float = 2.0;
+
+		if(Input.GetButtonDown ("Fire1")){
+			Attacking();
+			Debug.Log(nextDamageEvent);
+			if (Time.time >= nextDamageEvent){
+
+				nextDamageEvent = Time.time + attackDelay;
+				attacking = false;
+				Attacking();
+				Debug.Log("1");
+        	} else {
+        		weapon.collider.enabled = false;
+        		attacking = false;
+        	}
+
+		} else{
+			weapon.collider.enabled = false;
 		}
 
-		if (Input.GetKeyUp("e")){
+		if (Input.GetButtonUp ("Fire1")){
 			//attackDown = false;
 			weapon.collider.enabled = false;
 		}
@@ -159,9 +180,9 @@ function Update () {
 
 
 		//--------no life left--------/
-		if (playerHealth==0 && playerLives>=1){
-			//this.transform = Vector3(0,0,0);
+		if (playerHealth<=0){
 			playerHealth = totalHealth;
+			Debug.Log(totalHealth);
 			playerLives--;
 		}
 	} else {
@@ -226,13 +247,6 @@ function Dust(rotate){
 
 function OnTriggerEnter(other : Collider){
 
-	//enabling the cinematic camera
-
-	if(rigidbody.velocity.y < -0.1 && other.tag == "head"){
-			Debug.Log('boop');
-	}
-
-
 	if(other.tag == "cameraLeft") {
 		CameraChangeLeft = true;
 	}
@@ -244,8 +258,11 @@ function OnTriggerEnter(other : Collider){
 
 	//player gets hurt
 
-	if(other.tag == "hurt") {
-		Attack();
+	if(other.tag == "enemy") {
+		cameraShaker.animation.enabled = true;
+		var camerathingy = cameraShaker.GetComponent(Animator);
+		camerathingy.SetBool("playing", true);
+		EnemyHit();
 	}
 }
 
@@ -263,10 +280,33 @@ function OnTriggerExit(other : Collider){
 	}
 }
 
-function Attack(){
+function Attacking(){
+	//---------Attack texture--------//
+
+	var attackSide = 2;
+	var attackScale = 5;
+	if (movingRight){
+		attackScale = 5;
+		attackSide = 3;
+	}else{ 
+		attackSide = -2;
+		attackScale = -5;
+	}
+	
+	var attackTexture : GameObject;
+	attackTexture = Instantiate(Resources.Load('Prefabs/Sprites/cut_b'), Vector3(transform.localPosition.x + attackSide,transform.localPosition.y,transform.localPosition.z - 1), transform.rotation);
+	attackTexture.transform.localScale = new Vector3(attackScale,5,5);
+
+
+	//Attack Delay
+	weapon.collider.enabled = true;
+}
+
+function EnemyHit(){
 	if (playerHealth>=0 && playerLives>=0){
 		playerHealth--;
-		Debug.Log('stoppppppp');
+		var blood : GameObject;
+		blood = Instantiate(Resources.Load('Prefabs/Sprites/blood_a'), Vector3(transform.localPosition.x,transform.localPosition.y,transform.localPosition.z - 2), transform.rotation);
 	}
 }
 
