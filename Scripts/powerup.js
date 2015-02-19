@@ -15,11 +15,12 @@ var triplePoints : boolean = false;
 
 var spawnRandomCrates : boolean = false;
 
-var lowerWantedLevel : boolean = false;
-var raiseWantedLevel  : boolean = false;
-
 var shrinkPlayer  : boolean = false;
 var growPlayer  : boolean = false;
+
+function Update(){
+	Destroy(this.gameObject, 15);
+}
 
 function OnTriggerEnter (other : Collider) {
 	if(other.tag == "Player") {
@@ -73,18 +74,6 @@ function OnTriggerEnter (other : Collider) {
 		if(spawnRandomCrates){
 			var wantedStarClone : GameObject = Instantiate(Resources.Load('Prefabs/PickUps/10Pts'), Vector3(5,5,0), transform.rotation);
 			wantedStarClone.rigidbody.AddRelativeForce(transform.up * 10);
-		}
-
-		//Raise Wanted Level
-	    if (raiseWantedLevel){
-			GUIScript.wantedLevels++; 
-			Debug.Log(GUIScript.wantedLevels + " wanted level");
-		}
-
-		//Lower Wanted Level
-	    if (lowerWantedLevel){
-			GUIScript.wantedLevels--; 
-			Debug.Log(GUIScript.wantedLevels + " wanted level");
 		}
 
 		//Lower Wanted Level

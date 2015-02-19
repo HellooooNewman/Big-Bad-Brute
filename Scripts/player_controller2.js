@@ -64,9 +64,9 @@ function Start(){
 	rigidbody.useGravity = false;
 	weapon = gameObject.Find("weapon");
 	save();
-	characterSlot.animation.wrapMode = WrapMode.Loop;
-	characterSlot.animation["Jump"].layer = 1;
-	characterSlot.animation["Jump"].wrapMode = WrapMode.Once;
+	//characterSlot.animation.wrapMode = WrapMode.Loop;
+	//characterSlot.animation["Jump"].layer = 1;
+	//characterSlot.animation["Jump"].wrapMode = WrapMode.Once;
 }
 
 //-------------Call to this function to save at any time-------------//
@@ -99,7 +99,7 @@ function FixedUpdate () {
 			if (isGrounded()){
 				Dust();
 			}
-			rigidbody.velocity.x = (speed * 2.5) * Input.GetAxis("Horizontal");
+			rigidbody.velocity.x = (speed * 2.5) * Input.GetAxis("Horizontal2");
 		// Slow Speed
 		} else if (slowerSpeed) {
 			slowerSpeedTimer -= Time.deltaTime * 2;
@@ -107,9 +107,9 @@ function FixedUpdate () {
 				Debug.Log('double Speed off');
 				slowerSpeed = false;
 			}
-			rigidbody.velocity.x = (speed / 1.5) * Input.GetAxis("Horizontal");
+			rigidbody.velocity.x = (speed / 1.5) * Input.GetAxis("Horizontal2");
 		// Regular Speed
-		} else if(Input.GetAxis("Horizontal")) {
+		} else if(Input.GetAxis("Horizontal2")) {
 			if (isGrounded()){
 				Dust();
                 
@@ -119,7 +119,7 @@ function FixedUpdate () {
 			audio.loop = true;
 			audio.clip = feetAudio;
 			audio.Play();
-			rigidbody.velocity.x = speed * Input.GetAxis("Horizontal");
+			rigidbody.velocity.x = speed * Input.GetAxis("Horizontal2");
 		} else {
 			feetCheck.particleSystem.emissionRate = 0;
 			rigidbody.velocity.x = 0;
@@ -135,17 +135,19 @@ function Update(){
 
 		//-------------Character Jump and Double Jump-------------//
 
-		if(Input.GetButtonDown("Jump") && isGrounded()){
-			characterSlot.animation.CrossFade("Jump");
+		if(Input.GetButtonDown("Jump2") && isGrounded()){
+			Debug.Log("player 2 jump");
+			//characterSlot.animation.CrossFade("Jump");
 			rigidbody.velocity.y = jumpHeight;
 			jumpCount = true;
 			jumping = true;
 			var jumpTexture : GameObject;
 			jumpTexture = Instantiate(Resources.Load('Prefabs/Sprites/smoke_jump'), transform.position, transform.rotation);
-			characterSlot.animation.CrossFade("Jump");
-		} else if (Input.GetButtonDown("Jump") && !isGrounded() && jumpCount && !canWallJump) {
+			//characterSlot.animation.CrossFade("Jump");
+		} else if (Input.GetButtonDown("Jump2") && !isGrounded() && jumpCount && !canWallJump) {
 			rigidbody.velocity.y = doubleJumpHeight;
 			jumpCount = false;
+			Debug.Log("double Jump");
 		} else {
 			jumping = false;
 			//characterSlot.animation.CrossFade("Run");
@@ -155,7 +157,7 @@ function Update(){
 
 		// if(Input.GetKeyDown("space") && !isGrounded() && canWallJump){
 
-  //           var Direction = Input.GetAxis("Horizontal") * 5000;
+  //           var Direction = Input.GetAxis("Horizontal2") * 5000;
 
 
 		// 	jumpCount = false;
@@ -168,12 +170,12 @@ function Update(){
 
 		// }
 
-		if((Input.GetAxis("Horizontal") < 0) && movingRight && isGrounded){
+		if((Input.GetAxis("Horizontal2") < 0) && movingRight && isGrounded){
 			//-------------Character Rotation-------------//
 
 			//Scales the character on the x axis
 			RotateCharacter();
-		} else if ((Input.GetAxis("Horizontal") > 0) && !movingRight && isGrounded){
+		} else if ((Input.GetAxis("Horizontal2") > 0) && !movingRight && isGrounded){
 			RotateCharacter();
 		} else {
 			audio.Pause();
@@ -181,11 +183,7 @@ function Update(){
 
 		//---------------Animations-------------//
 
-		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1)
-			characterSlot.animation.CrossFade("Run");
 
-		else
-			characterSlot.animation.CrossFade("Idle");
 
 		if(!isGrounded()){
 			
@@ -193,7 +191,7 @@ function Update(){
 
 		//---------------Attack-------------//
 	
-		if(Input.GetButtonDown ("Fire1") && !attack){
+		if(Input.GetButtonDown ("Fire2") && !attack){
 			Attacking();
 		}
 
@@ -202,9 +200,8 @@ function Update(){
 			attackDelay -= Time.deltaTime * 4;
 			weapon.collider.enabled = true;
 			if(attackDelay <= 0.0){
-
-				//attack again
 				weapon.collider.enabled = false;
+				Debug.Log("attack again");
 				attackDelay = 0.3;
 	    		attack = false;
 			}
@@ -212,7 +209,7 @@ function Update(){
 
 
 
-		if(!isGrounded && Input.GetAxis("Horizontal") != 0 && Input.GetButtonDown ("Fire1")){
+		if(!isGrounded && Input.GetAxis("Horizontal2") != 0 && Input.GetButtonDown ("Fire2")){
 			Debug.Log("Air Dash");
 		}
 
@@ -309,13 +306,14 @@ function Hit(){
 }
 
 function Attacking(){
+	Debug.Log("attack hit");
 	audio.clip = punchAudio;
     audio.Play();
 
 	weapon.collider.enabled = true;
 	attack = true;
-	characterSlot.animation.Play("Attack");
-	characterSlot.animation["Attack"].speed= 3;
+	//characterSlot.animation.Play("Attack");
+	//characterSlot.animation["Attack"].speed= 3;
     
 	//---------Attack texture--------//
 

@@ -1,0 +1,473 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"go",
+				"goLeft"
+			],
+			[
+				"player",
+				"playerScript"
+			],
+			[
+				"en",
+				"enemyInsideJumpZone"
+			],
+			[
+				"enemyI",
+				"enemyInsideJumpZone"
+			],
+			[
+				"ene",
+				"enemyJump"
+			],
+			[
+				"above",
+				"AboveCheck"
+			],
+			[
+				"add",
+				"AddForce"
+			],
+			[
+				"get",
+				"get	Get Elements"
+			],
+			[
+				"rem",
+				"removebut"
+			],
+			[
+				"ad",
+				"addEventListener"
+			],
+			[
+				"abov",
+				"AboveCheck"
+			],
+			[
+				"ma",
+				"mallCop"
+			],
+			[
+				"is",
+				"IsGrounded"
+			],
+			[
+				"Ra",
+				"Range"
+			],
+			[
+				"enemy",
+				"enemyHealth"
+			],
+			[
+				"double",
+				"doubleDamage"
+			],
+			[
+				"ca",
+				"cameraShaker"
+			],
+			[
+				"rigid",
+				"rigidbody"
+			],
+			[
+				"DE",
+				"Debug"
+			],
+			[
+				"game",
+				"GameObject"
+			],
+			[
+				"att",
+				"attacking"
+			],
+			[
+				"attack",
+				"attackTimer"
+			],
+			[
+				"ga",
+				"GameObject"
+			],
+			[
+				"pl",
+				"playerScript"
+			],
+			[
+				"pla",
+				"playerLives"
+			],
+			[
+				"tot",
+				"totalHealth"
+			],
+			[
+				"sc",
+				"scoreUI"
+			],
+			[
+				"p",
+				"position"
+			],
+			[
+				"local",
+				"localPosition"
+			],
+			[
+				"look",
+				"lookAtDistance"
+			],
+			[
+				"chas",
+				"chaseRange"
+			],
+			[
+				"play",
+				"playerLookAt"
+			],
+			[
+				"wanted",
+				"wantedLevels"
+			],
+			[
+				"wan",
+				"wantedUp"
+			],
+			[
+				"Player",
+				"PlayerPrefs"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/C/Users/Kevin/Downloads/Scripts-2015-02-19/Scripts/spriteAnimation.js",
+			"settings":
+			{
+				"buffer_size": 635,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 81.0,
+		"selected_items":
+		[
+			[
+				"package control: instal",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 146.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/scoreManager.js",
+		"/C/Users/Kevin/Downloads/Scripts-2015-02-19/Scripts/gameManager.js",
+		"/C/Users/Kevin/Downloads/Scripts-2015-02-19/Scripts/player_controller.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/gameManager.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/enemy.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/player_controller.js",
+		"/C/Users/Kevin/Downloads/Scripts-2015-02-19/Scripts/enemy.js",
+		"/C/Users/Kevin/Downloads/Scripts-2015-02-19/Scripts/cameraTwoPlayer.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/cameraTwoPlayer.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/powerup.js",
+		"/C/Users/Kevin/Desktop/inclassapp_done/routes/index.js",
+		"/C/Users/Kevin/OneDrive/wamp/www/svganimated/index.html",
+		"/C/Users/Kevin/OneDrive/wamp/www/html500/css/bootstrap.css",
+		"/C/Users/Kevin/OneDrive/wamp/www/html500/index.html",
+		"/C/Users/Kevin/Downloads/html500/index.html",
+		"/C/Users/Kevin/Downloads/inclassapp2/bin/www",
+		"/C/Users/Kevin/Downloads/inclassapp2/views/employeelist.jade",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/gameOverMenu.js",
+		"/C/Users/Kevin/Desktop/Game V6/starting_level/Assets/Scripts/characterMain.js",
+		"/C/Users/Kevin/Desktop/mapsapi/main.js",
+		"/C/Users/Kevin/Desktop/mapsapi/index.html",
+		"/C/Users/Kevin/Desktop/local/main.js",
+		"/C/Users/Kevin/Desktop/local/index.html",
+		"/C/Users/Kevin/Downloads/inclassapp2/routes/index.js",
+		"/C/Users/Kevin/Downloads/inclassapp2/app.js",
+		"/C/Users/Kevin/Downloads/inclassapp2/views/index.jade",
+		"/C/Users/Kevin/Downloads/inclassapp2/package.json",
+		"/C/Users/Kevin/Downloads/inclassapp2/node_modules/express/package.json",
+		"/C/Users/Kevin/Downloads/chat_files/node_modules/express-generator/bin/express",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/healthBarLoop.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/glowShader.shader",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/glowShader.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/popGrow.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/points.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/camera_follow.js",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/package.json",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/ionic.project",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/js/services.js",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/js/controllers.js",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/js/app.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/player_controller2.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/spriteAnimation.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/enemySpawnPoints.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/bulletDestroyer.js",
+		"/C/Users/Kevin/Desktop/juice.php",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/includes/juice.php",
+		"/C/Users/Kevin/OneDrive/Documents/IMS/Marco/Angular/Newman_k_5007_IonicApp/juice/www/includes/juice.php",
+		"/C/Users/Kevin/OneDrive/wamp/www/juices/www/includes/juice.php",
+		"/C/Users/Kevin/Documents/GitHub/JuiceApp/config.xml",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice.php",
+		"/C/Users/Kevin/Downloads/Newman_k_5007_IonicApp/juice/www/includes/juice.php",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/index.html",
+		"/C/Users/Kevin/Desktop/juice/www/includes/juice.php",
+		"/C/Users/Kevin/Documents/GitHub/JuiceApp/www/index.html",
+		"/C/Users/Kevin/Documents/GitHub/JuiceApp/www/js/services.js",
+		"/C/Users/Kevin/Documents/GitHub/JuiceApp/www/config.xml",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/partials/tab-dash.html",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/partials/tab-menu.html",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/partials/menu-detail.html",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/scss/ionic.app.scss",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/www/partials/tabs.html",
+		"/C/Users/Kevin/FirmlyStamped/www/index.html",
+		"/C/Users/Kevin/waterloo/www/partials/tab-menu.html",
+		"/C/Users/Kevin/waterloo/www/js/controllers.js",
+		"/C/Users/Kevin/waterloo/www/partials/menu-detail.html",
+		"/C/Users/Kevin/waterloo/www/js/services.js",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/juice.php",
+		"/C/Users/Kevin/OneDrive/wamp/www/juice/connect.php",
+		"/C/Users/Kevin/waterloo/www/js/app.js",
+		"/C/Users/Kevin/waterloo/www/partials/tabs.html",
+		"/C/Users/Kevin/FirmlyStamped/www/js/app.js",
+		"/C/Users/Kevin/todoApp/www/js/services.js",
+		"/C/Users/Kevin/waterloo/www/index.html",
+		"/C/Users/Kevin/waterloo/www/partials/tab-dash.html",
+		"/C/Users/Kevin/waterloo/www/partials/chat-detail.html",
+		"/C/Users/Kevin/juice/www/templates/tabs.html",
+		"/C/Users/Kevin/juice/www/js/services.js",
+		"/C/Users/Kevin/juice/www/js/controllers.js",
+		"/C/Users/Kevin/juice/www/index.html",
+		"/C/Users/Kevin/juice/www/js/app.js",
+		"/C/Users/Kevin/juice/www/css/style.css",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/loadScene.js",
+		"/C/Users/Kevin/OneDrive/wamp/www/Newman_k_6006_Drupal/themes/bootstrap/bootstrap_subtheme/css/style.css",
+		"/C/Users/Kevin/OneDrive/wamp/www/Newman_k_6006_Drupal/themes/bootstrap/bootstrap_subtheme/bootstrap_subtheme.info",
+		"/C/Users/Kevin/OneDrive/wamp/www/Newman_k_6006_Drupal/themes/bootstrap/bootstrap.info",
+		"/C/Users/Kevin/OneDrive/wamp/www/Newman_k_6006_Drupal/themes/bootstrap/bootstrap_subtheme/bootstrap_subtheme.info.starterkit",
+		"/C/Users/Kevin/OneDrive/wamp/www/Newman_k_6006_Drupal/themes/bootstrap/theme-settings.php",
+		"/C/Users/Kevin/OneDrive/wamp/www/Newman_k_6006_Drupal/themes/bootstrap/template.php",
+		"/C/Users/Kevin/OneDrive/wamp/www/Newman_k_6006_Drupal/themes/bootstrap/bootstrap.make.example",
+		"/C/Users/Kevin/OneDrive/wamp/www/Newman_k_6006_Drupal/themes/bootstrap/css/overrides.css",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/mainMenu.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/dustDestroyer.js",
+		"/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/unitySideScroller.sublime-project",
+		"/C/Users/Kevin/Desktop/Game V6/starting_level/Assets/Scripts/enemy.js",
+		"/C/Users/Kevin/Desktop/Game V6/starting_level/Assets/Scripts/Waypoints.js",
+		"/C/Users/Kevin/Desktop/class_controller/class_controller/Assets/Scripts/camera_follow.js",
+		"/C/Users/Kevin/Desktop/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/camera_follow.js",
+		"/C/Users/Kevin/Desktop/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/scoreManager.js",
+		"/C/Users/Kevin/Desktop/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/player_controller.js",
+		"/C/Users/Kevin/Desktop/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts/powerup.js",
+		"/C/Users/Kevin/todoApp/www/js/app.js",
+		"/C/Users/Kevin/todoApp/www/index.html",
+		"/C/Users/Kevin/BlankApp/www/index.html",
+		"/C/Users/Kevin/Documents/SideScrollerTest/Assets/Scripts/Player.js",
+		"/C/Users/Kevin/OneDrive/Documents/3d/Dropbox Car Racing/CarTutorialProject/Assets/Scripts/Car Control/PlayerCar_Script.js",
+		"/C/Users/Kevin/Downloads/Main Player.js.meta"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"					",
+			"attacked",
+			"playerBelow",
+			"pause",
+			"audio",
+			"timer",
+			"moving",
+			"direc",
+			"’",
+			"title",
+			"time.time",
+			"Debug.Log(Player.transform.position.y);\n		// Debug.Log(transform.position.y);",
+			"velocity",
+			"blood_a",
+			"false",
+			"		\n",
+			"totalLives",
+			"2",
+			"attack()",
+			"juice_img",
+			"Menus",
+			"\");",
+			"menuItems",
+			"body",
+			"Destroy(this.gameObject);",
+			"randomSpawn",
+			"- ",
+			");\n",
+			"emission",
+			"gui",
+			"wall",
+			"debug",
+			"enabled",
+			"color",
+			"timerUI",
+			"chPosition",
+			"enemyhealth",
+			"gameObject",
+			"back",
+			"){\n",
+			"	\n",
+			"--;\n",
+			"gameStart",
+			"foo",
+			"float",
+			"bar"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"playerAbove",
+			"'",
+			"",
+			"enemyHealth"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/Users/Kevin/Downloads/Scripts-2015-02-19/Scripts/spriteAnimation.js",
+					"settings":
+					{
+						"buffer_size": 635,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.unsaved_changes":
+	{
+		"height": 94.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 166.0,
+	"status_bar_visible": true
+}

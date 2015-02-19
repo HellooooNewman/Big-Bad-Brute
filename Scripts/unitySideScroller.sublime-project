@@ -1,0 +1,18 @@
+{
+	"folders":
+	[
+		{
+			"file_exclude_patterns":
+			[
+				"*.dll",
+				"*.meta",
+				"*.sublime-project",
+				"*.sublime-workspace"
+			],
+			"path": "/C/Users/Kevin/Google Drive/AwesomeSauce/SideScrollerBuild_1/Assets/Scripts"
+		},
+		{
+			"path": "/C/Users/Kevin/Downloads/inclassapp2"
+		}
+	]
+}

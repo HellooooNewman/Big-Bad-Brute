@@ -4,23 +4,33 @@ var enemyTotal : int = 10;
 private var enemyCount : int;
 var Player : GameObject;
 var randomEnemy : GameObject[];
-var timer : float = 0.0;
+var spawnTimer : float = 6.0;
+private var timer : float = 0.0;
+var stage : int = 0;
+private var prefabRandom : int = 1;
 
 function  Update(){
-	var GUIScript : scoreManager = FindObjectOfType(scoreManager);
-
 	
-
+	var GUIScript : scoreManager = FindObjectOfType(scoreManager);
 	if(GUIScript.gameStart){
+
+		if(GUIScript.score >= 100 && GUIScript.score <= 500){
+			stage = 1;
+			var stage1 = GameObject.Find("stage1").animation.Play();
+		} else if(GUIScript.score >= 500 && GUIScript.score <= 1000){
+			stage = 2;
+		} else if(GUIScript.score > 1000){
+			stage = 3;
+		}
+
 		enemyCount = GameObject.FindGameObjectsWithTag("enemy").length;
 		if (enemyCount<enemyTotal){
-			
 			timer += Time.deltaTime * 2;
-			if (timer>=4){
+			if (timer>=spawnTimer){
 				FindClosestSpawn();
 				var spawnItem : GameObject;
 				var spawnPosition : Vector3 = FindClosestSpawn().transform.position;
-				var prefabRandom = Random.Range(0,randomEnemy.length);
+				prefabRandom = Random.Range(0,stage);
 				var safeName : String = randomEnemy[prefabRandom].name.ToString();
 				spawnItem = Instantiate(Resources.Load('Prefabs/Enemies/'+safeName), spawnPosition, transform.rotation);
 				timer = 0;

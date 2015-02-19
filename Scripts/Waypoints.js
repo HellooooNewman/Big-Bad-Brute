@@ -8,10 +8,6 @@ public var isStart : boolean = false;
 
 function Awake(){
 	
-	if(!next){
-		Debug.LogWarning("Waypoint Not Connected");
-	}
-	
 	if(isStart){
 		start = this;
 	}
