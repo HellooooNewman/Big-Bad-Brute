@@ -1,6 +1,6 @@
 #pragma strict
 
-var enemyTotal : int = 10;
+var enemyTotal : int = 3;
 private var enemyCount : int;
 var Player : GameObject;
 var randomEnemy : GameObject[];
@@ -8,6 +8,10 @@ var spawnTimer : float = 6.0;
 private var timer : float = 0.0;
 var stage : int = 0;
 private var prefabRandom : int = 1;
+
+function Start(){
+	Player = gameObject.Find("MainPlayer");
+}
 
 function  Update(){
 	
@@ -24,10 +28,10 @@ function  Update(){
 		}
 
 		enemyCount = GameObject.FindGameObjectsWithTag("enemy").length;
-		if (enemyCount<enemyTotal){
+		if (enemyCount <= enemyTotal){
 			timer += Time.deltaTime * 2;
 			if (timer>=spawnTimer){
-				FindClosestSpawn();
+				
 				var spawnItem : GameObject;
 				var spawnPosition : Vector3 = FindClosestSpawn().transform.position;
 				prefabRandom = Random.Range(0,stage);

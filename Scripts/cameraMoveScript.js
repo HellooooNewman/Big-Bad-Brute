@@ -5,6 +5,7 @@ public var camera : GameObject;
 public var charView : GameObject;
 public var mainView : GameObject;
 public var levelView : GameObject;
+public var creditsView : GameObject;
 public var camPosition : int;
 
 
@@ -37,5 +38,12 @@ function FixedUpdate(){
 		Camera.main.transform.rotation = Quaternion.Slerp (Camera.main.transform.rotation, levelRotation, smooth * Time.deltaTime); //with lerp
 	}
 
-	Debug.Log(camPosition + 'camPosition');
+    if(camPosition == 4){
+    	var creditPosition = creditsView.transform.position;
+		var creditRotation = creditsView.transform.rotation;
+		// Camera.main.transform.position = mainPosition; // no lerp
+		Camera.main.transform.position = Vector3.Slerp(Camera.main.transform.position, creditPosition, smooth * Time.deltaTime); //with lerp
+		// Camera.main.transform.rotation = mainRotation; // no lerp
+		Camera.main.transform.rotation = Quaternion.Slerp (Camera.main.transform.rotation, creditRotation, smooth * Time.deltaTime); //with lerp
+	}
 }

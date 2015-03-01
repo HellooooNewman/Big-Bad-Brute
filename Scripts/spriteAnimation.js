@@ -2,6 +2,8 @@
 
 var texture : Texture[];
 
+var animationSpeed : float = 30.0;
+
 private var timer : float = 0.0;
 
 private var framePointer : int = 1;
@@ -15,7 +17,7 @@ function Start () {
 
 function Update () {
 
- 	timer += Time.deltaTime * 30.0;
+ 	timer += Time.deltaTime * animationSpeed;
 
 	if ((timer >= framesPerSecond) && framePointer < texture.length - 1) {
 		framePointer++;

@@ -1,5 +1,12 @@
 ﻿#pragma strict
 
+//-------------Player Selected-------------//
+
+var characterSlot : GameObject[];
+private var selectedCharacter : int;
+var character : GameObject;
+private var instantiatedCharacter : GameObject;
+
 //-------------Player Audio-------------//
 
 public var feetAudio : AudioClip;
@@ -8,6 +15,7 @@ public var punchAudio : AudioClip;
 //-------------Player Variables-------------//
 
 public var feetCheck : GameObject;
+private var groundPoundCollider : GameObject;
 
 public var totalHealth : int = 10;
 public var playerHealth : int = 5;
@@ -37,7 +45,6 @@ var weapon : GameObject;
 var jumping : boolean = false;
 
 var cameraShaker : GameObject;
-var characterSlot : GameObject;
 
 var dustDirection : boolean;
 var emissionSpeed : float = 0;
@@ -49,24 +56,31 @@ var bloodTexture : GameObject[];
 
 private var moving : boolean = false;
 
-var characterHit : boolean = false;
-
-var attack : boolean = true;
+var attack : boolean = false;
 var attackDelay : float = 2.0;
+var attackAnimationSwitch : boolean = true;
+
+private var groundPound : boolean = false;
 
 //-------------Camera Position Variables-------------//
 
 public var CameraChangeLeft : boolean = false;
 
 function Start(){
-	
+	selectedCharacter = PlayerPrefs.GetInt("whichCharacter");
+	character = characterSlot[selectedCharacter];
 	PlayerPrefs.SetInt("Player Score", 10);
 	rigidbody.useGravity = false;
 	weapon = gameObject.Find("weapon");
+	cameraShaker = gameObject.Find("CameraShaker");
+	groundPoundCollider = gameObject.Find("groundPound");
 	save();
-	characterSlot.animation.wrapMode = WrapMode.Loop;
-	characterSlot.animation["Jump"].layer = 1;
-	characterSlot.animation["Jump"].wrapMode = WrapMode.Once;
+
+	//---------Instantiate Character Selected In ----------//
+	
+    instantiatedCharacter = Instantiate (character, transform.position, Quaternion.Euler(Vector3(0, 90, 0)));
+    instantiatedCharacter.transform.parent = transform;
+    instantiatedCharacter.transform.localPosition= Vector3(0, -1, 0);
 }
 
 //-------------Call to this function to save at any time-------------//
@@ -116,87 +130,137 @@ function FixedUpdate () {
 			} else {
 				feetCheck.particleSystem.emissionRate = 0;
 			}
-			audio.loop = true;
-			audio.clip = feetAudio;
-			audio.Play();
+			// audio.loop = true;
+			// audio.clip = feetAudio;
+			// audio.Play();
 			rigidbody.velocity.x = speed * Input.GetAxis("Horizontal");
 		} else {
 			feetCheck.particleSystem.emissionRate = 0;
-			rigidbody.velocity.x = 0;
+			//rigidbody.velocity.x = 0;
 		}
+
+		//---------------Attack-------------//
+	} else {
+		rigidbody.velocity.x = 0;
 	}
+
+	
 }
 
 
 function Update(){
+
 	var GUIScript : scoreManager = FindObjectOfType(scoreManager);
 	if(GUIScript.gameStart){
 		emissionSpeed = 25;
 
-		//-------------Character Jump and Double Jump-------------//
+	//-------------Character Jump and Double Jump-------------//
 
 		if(Input.GetButtonDown("Jump") && isGrounded()){
-			characterSlot.animation.CrossFade("Jump");
 			rigidbody.velocity.y = jumpHeight;
 			jumpCount = true;
 			jumping = true;
 			var jumpTexture : GameObject;
 			jumpTexture = Instantiate(Resources.Load('Prefabs/Sprites/smoke_jump'), transform.position, transform.rotation);
-			characterSlot.animation.CrossFade("Jump");
-		} else if (Input.GetButtonDown("Jump") && !isGrounded() && jumpCount && !canWallJump) {
+			instantiatedCharacter.animation["Jump"].wrapMode = WrapMode.Once;
+			instantiatedCharacter.animation.Play("Jump");
+		} else if (Input.GetButtonDown("Jump") && !isGrounded() && jumpCount) {
+			jumpTexture = Instantiate(Resources.Load('Prefabs/Sprites/smoke_jump'), transform.position, transform.rotation);
 			rigidbody.velocity.y = doubleJumpHeight;
+			instantiatedCharacter.animation.Play("DoubleJump");
 			jumpCount = false;
 		} else {
 			jumping = false;
-			//characterSlot.animation.CrossFade("Run");
 		}
 
-		//-------------Wall Jump------------//
-
-		// if(Input.GetKeyDown("space") && !isGrounded() && canWallJump){
-
-  //           var Direction = Input.GetAxis("Horizontal") * 5000;
-
-
-		// 	jumpCount = false;
-  //           RotateCharacter();
-  //           if ( movingRight) {
-  //       	rigidbody.AddRelativeForce (5000, 5000, 0);
-	 //        } else {
-		// 		rigidbody.AddRelativeForce (-5000, 5000, 0);
-	 //        } 
-
-		// }
+	//-------------Character Rotation-------------//
 
 		if((Input.GetAxis("Horizontal") < 0) && movingRight && isGrounded){
-			//-------------Character Rotation-------------//
-
-			//Scales the character on the x axis
 			RotateCharacter();
 		} else if ((Input.GetAxis("Horizontal") > 0) && !movingRight && isGrounded){
 			RotateCharacter();
 		} else {
-			audio.Pause();
+			//audio.Pause();
 		}
 
-		//---------------Animations-------------//
+	//---------------Air Dash-------------//
 
-		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1)
-			characterSlot.animation.CrossFade("Run");
+		if(!isGrounded() && Input.GetAxis("Horizontal") != 0 && Input.GetButtonDown("Fire1")){
+			Debug.Log("Air Dash");
+		}
 
-		else
-			characterSlot.animation.CrossFade("Idle");
+	//---------------Ground Pound-------------//
 
-		if(!isGrounded()){
+		if(!isGrounded() && Input.GetAxis("Vertical") <= -0.50){
+			Debug.Log("Ground Pound");
+			
+			groundPound = true;
 			
 		}
 
-		//---------------Attack-------------//
-	
-		if(Input.GetButtonDown ("Fire1") && !attack){
-			Attacking();
+		if (groundPound){
+			rigidbody.AddForce (Vector3.down * 4000);
+			groundPoundCollider.collider.enabled = true;
+			Instantiate(Resources.Load('Prefabs/Sprites/smoke_jump'), transform.position, transform.rotation);
 		}
 
+
+		if(isGrounded() && groundPound){
+			var groundPoundLand : GameObject = Instantiate(Resources.Load('Prefabs/Sprites/smoke_jump'), transform.position, transform.rotation);
+			groundPoundLand.transform.localScale = Vector3(15,5,5);
+			groundPoundCollider.collider.enabled = false;
+			Debug.Log('splash');
+			groundPound = false;
+		}
+
+
+	//---------------Fall Damage-------------//
+
+	//base it off a timer for how long he has been falling for.
+
+		if (rigidbody.velocity.y <= -35 ){
+			if (isGrounded()){
+				Debug.Log('owwwww');
+				//playerHealth -= 2;
+			}
+			
+		}
+
+	//---------------Animations-------------//
+	
+		if (Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1 && isGrounded()){
+			instantiatedCharacter.animation.CrossFade('Run');
+		} else {
+			instantiatedCharacter.animation.CrossFade('Idle');
+		}
+
+		if(Input.GetButtonDown ("Fire1") && !attack){
+			Attacking();
+			audio.PlayOneShot(punchAudio);
+			attackAnimationSwitch = !attackAnimationSwitch;
+			if (attackAnimationSwitch){
+				instantiatedCharacter.animation.Play('Attack1');
+			} else {
+				instantiatedCharacter.animation.Play('Attack2');
+			}	
+		}
+
+		// Debug.Log(rigidbody.velocity.y + "  rigidbody");
+
+		if (!isGrounded()){
+			if (rigidbody.velocity.y > 0){
+				instantiatedCharacter.animation.CrossFade("Falling");
+			} else  if(rigidbody.velocity.y < 0){
+				instantiatedCharacter.animation.CrossFade("Falling");
+			}
+		}
+
+		if (instantiatedCharacter.animation["Falling"].enabled == true && isGrounded()){
+			//instantiatedCharacter.animation.CrossFade("RunLand");
+			Debug.Log("Land");
+		}
+
+	//---------------Attack Delay-------------//
 
 		if(attack){
 			attackDelay -= Time.deltaTime * 4;
@@ -205,31 +269,27 @@ function Update(){
 
 				//attack again
 				weapon.collider.enabled = false;
-				attackDelay = 0.3;
+				attackDelay = 1.0;
 	    		attack = false;
 			}
-		}
+		} 
 
-
-
-		if(!isGrounded && Input.GetAxis("Horizontal") != 0 && Input.GetButtonDown ("Fire1")){
-			Debug.Log("Air Dash");
-		}
-
-		//---------------Fall Damage-------------//
-
-		if (rigidbody.velocity.y == -25){
-			Debug.Log('owwwww');
-		}
-
-		//--------no life left--------/
+	//--------no life left--------/
 		if (playerHealth<=0){
 			playerHealth = totalHealth;
 			playerLives--;
 		}
 
+
+
 	} else {
 		feetCheck.particleSystem.emissionRate = 0;
+	}
+
+
+	if(playerLives<=0){
+		instantiatedCharacter.animation.CrossFade("Death");
+		Debug.Log("death");
 	}
 }
 
@@ -240,11 +300,12 @@ function RotateCharacter(){
 	var dustTurn : GameObject;
 	var dustScale : int;
 	if (movingRight){
-		dustScale = 2;
-	}else{ 
 		dustScale = -2;
+	} else { 
+		dustScale = 2;
 	}
-	dustTurn = Instantiate(Resources.Load('Prefabs/Sprites/dustTurn'), Vector3(transform.localPosition.x + dustScale,transform.localPosition.y - 1.6,transform.localPosition.z - 2), transform.rotation);
+
+	dustTurn = Instantiate(Resources.Load('Prefabs/Sprites/dustTurn'), Vector3(transform.localPosition.x + dustScale,transform.localPosition.y - 1.6 ,transform.localPosition.z), transform.rotation);
 }
 
 //-------------Dust Trail at his feet-------------//
@@ -267,7 +328,7 @@ function OnTriggerEnter(other : Collider){
 	//player gets hurt
 
 	if(other.tag == "enemy") {
-		characterHit = true;
+		speed = 3;
 	}
 
 	if(other.tag == "wall") {
@@ -290,16 +351,20 @@ function OnTriggerExit(other : Collider){
 	}
 
 	if(other.tag == "enemy") {
-		characterHit = false;
-	}
-
-	if(other.tag == "wall") {
-		canWallJump = false;
-		CurrentWall = null;
+		speed = 15;
 	}
 }
 
-function Hit(){
+function Hit(enemyPosition : Vector3){
+	var cameraShake = gameObject.Find("cameraShaker");
+
+	if (enemyPosition.x > transform.position.x) {
+		rigidbody.AddRelativeForce (-15000, 15000, 0);
+    } else {
+		rigidbody.AddRelativeForce (15000, 15000, 0);
+    } 
+
+	//cameraShake.animation.Play();
 	playerHealth--;
 	var randomBloodPrefab = Random.Range(0, bloodTexture.length);
 	var safeName : String = bloodTexture[randomBloodPrefab].name.ToString();
@@ -309,28 +374,35 @@ function Hit(){
 }
 
 function Attacking(){
-	audio.clip = punchAudio;
-    audio.Play();
+
 
 	weapon.collider.enabled = true;
 	attack = true;
-	characterSlot.animation.Play("Attack");
-	characterSlot.animation["Attack"].speed= 3;
     
 	//---------Attack texture--------//
 
 	var attackSide = 2;
-	var attackScale = 5;
+	var attackScale = 3;
 	if (movingRight){
-		attackScale = 5;
-		attackSide = 3;
+		attackScale = 3;
+		attackSide = 1;
 	}else{ 
-		attackSide = -3;
-		attackScale = -5;
+		attackSide = -1;
+		attackScale = -3;
 	}
 
 	var attackTexture : GameObject;
-	attackTexture = Instantiate(Resources.Load('Prefabs/Sprites/cut_b'), Vector3(transform.localPosition.x + attackSide,transform.localPosition.y,transform.localPosition.z - 1), transform.rotation);
+
+	if (attackAnimationSwitch){
+		attackTexture = Instantiate(Resources.Load('Prefabs/Sprites/slashUpper'), Vector3(transform.localPosition.x + attackSide,transform.localPosition.y,transform.localPosition.z - 1), transform.rotation);
+	} else {
+		attackTexture = Instantiate(Resources.Load('Prefabs/Sprites/horiSlash'), Vector3(transform.localPosition.x + attackSide,transform.localPosition.y,transform.localPosition.z - 1), transform.rotation);
+	
+	}
+
+	attackTexture.transform.parent = transform;
+
+	
 	attackTexture.transform.localScale = new Vector3(attackScale,5,5);
 }
 

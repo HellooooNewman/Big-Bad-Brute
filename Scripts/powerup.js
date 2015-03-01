@@ -41,6 +41,11 @@ function OnTriggerEnter (other : Collider) {
 		//extra Time
 	    if (extraTime){
 			GUIScript.timer += 25;
+			var spawnItem : GameObject = Instantiate(Resources.Load('Prefabs/PopUps/time'), Vector3(142,-19,0), Quaternion.Euler(Vector3.zero));
+			var guiPosition = gameObject.Find("Time");
+			spawnItem.transform.SetParent(guiPosition.transform, false);
+			spawnItem.rigidbody.AddRelativeForce(transform.up * 10);
+			spawnItem.rigidbody.AddForce(0,1,0);
 		}
 
 		//less Time
@@ -85,6 +90,8 @@ function OnTriggerEnter (other : Collider) {
 	    if (growPlayer){
 			Debug.Log("Player grew");
 		}
+
+
 		Destroy(this.gameObject);
 	}
 }

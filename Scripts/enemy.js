@@ -28,7 +28,7 @@ private var enemySeeing : boolean = false;
 var waypoint : Transform[];
 private var currentWaypoint : int;
 
-
+var enemyInsideJumpZone : boolean;
 
 var playerAbove : boolean;
 var distToGround: float;
@@ -36,7 +36,6 @@ var distToGround: float;
 function Start(){
 	Player = GameObject.FindWithTag("Player");
 	distToGround = collider.bounds.extents.y;
-
 }
 
 var timer : float = 0.0;
@@ -52,11 +51,12 @@ function Update () {
 	//Debug.Log("enemy" + transform.position.x);
 
 
+
 	rigidbody.AddForce(new Vector3(0, -gravity * rigidbody.mass,0)); //custom gravity formula
 
 	/*-----------Enemy Health------------*/
 
-	if (enemyHealth == enemyHealthTotal){
+	if (enemyHealth == enemyHealthTotal || enemyHealth <= 0){
 		enemyHealthContainer.enabled = false;
 	} else {
 		enemyHealthContainer.enabled = true;
@@ -72,6 +72,7 @@ function Update () {
 		/*-----------Enemy Sees the chacter------------*/
 
 		if(Vector3.Distance(transform.position,Player.transform.position) < MinDist){
+			
 			enemySeeing = true;
 			//if the player is moving look in the direction of the player, and move towards him
 
@@ -81,34 +82,36 @@ function Update () {
 				/*-----------Player is above Enemy------------*/
 
 				if(Player.transform.position.y + 0.3 <= transform.position.y){
+					EnemyBody.animation.CrossFade("Run");
 					//Debug.Log("below");
-					playerAbove = false;
-					if (Player.transform.position.x < transform.position.x){
-						goRight();
-					} else if (Player.transform.position.x > transform.position.x){
+					//playerAbove = false;
+					if (Mathf.Round(Player.transform.position.x) != Mathf.Round(transform.position.x)){
+						if (Player.transform.position.x < transform.position.x){
+							goLeft();
+						} else if (Player.transform.position.x > transform.position.x){
+							goRight();
+						}
+					} else {
 						goLeft();
+						//Debug.Log("right on top of him");
 					}
 
 				/*-----------Player is below Enemy------------*/
 
 				} else if ((transform.position.y + 4) < Player.transform.position.y) {
+					EnemyBody.animation.CrossFade("Run");
 					//Debug.Log("above");
-					playerAbove = true;
+					//playerAbove = true;
 					if (!mallCop){
-						if(AboveCheck()){
-							//Debug.Log("there's nothing above me");
-							if (Player.transform.position.y <= transform.position.y - 5){
+						//Debug.Log("there's nothing above me");
+						if (Mathf.Round(Player.transform.position.x) != Mathf.Round(transform.position.x)){
+							if (Player.transform.position.x < transform.position.x){
 								goLeft();
-							} else if (Player.transform.position.y <= transform.position.y + 5){
+							} else if (Player.transform.position.x > transform.position.x){
 								goRight();
 							}
 						} else {
-							//Debug.Log("there's a thing above me");
-							if (playerDirection.x < 0.0){
-								goLeft();
-							} else if (playerDirection.x > 0.0){
-								goRight();
-							}
+							EnemyBody.animation.CrossFade("Idle");
 						}
 					} else {
 						//Debug.Log("Stay there chubby");
@@ -117,6 +120,7 @@ function Update () {
 				/*-----------Player is on the same plane------------*/
 
 				} else {
+					EnemyBody.animation.CrossFade("Run");
 					playerAbove = false;
 					//Debug.Log("same plane");
 					if (Player.transform.position.x < transform.position.x){
@@ -131,10 +135,10 @@ function Update () {
 			// if he's not moving, wait 3 seconds then turn off the enemy collider off
 			} else {
 				timer += Time.deltaTime * 2;
-				if (timer>=2.0){
-					Debug.Log("enemy hit 1");
+				if (timer>=1.0){
+					EnemyBody.animation.CrossFade("Attack1");
 					timer = 0;
-					playerScript.Hit();
+					playerScript.Hit(transform.position);
 				}
 			}
 		}
@@ -145,6 +149,7 @@ function Update () {
 
 		if(Vector3.Distance(transform.position,Player.transform.position) >= MaxDist) {
 			//rigidbody.velocity.x = 0;
+			EnemyBody.animation.CrossFade("Idle");
 		}
 
 
@@ -153,6 +158,7 @@ function Update () {
 
 		if(!mallCop && waypoint !== null){
 			if(currentWaypoint < waypoint.length && !enemySeeing && waypoint.Length > 0){
+				EnemyBody.animation.CrossFade("Run");
 
 				var target : Vector3 = waypoint[currentWaypoint].position;
 				var moveDirection : Vector3 = target - transform.position;
@@ -172,7 +178,6 @@ function Update () {
 		}
 	}
 
-
 }
 
 function IsGrounded() : boolean {
@@ -186,15 +191,15 @@ function AboveCheck() : boolean {
 
 function goRight(){
 	transform.Translate(Vector3.right * MoveSpeed * Time.deltaTime);
-	EnemyBody.transform.localScale = new Vector3(-transform.localScale.x,transform.localScale.y,transform.localScale.z);
+	EnemyBody.transform.localScale = new Vector3(transform.localScale.x,transform.localScale.y,transform.localScale.z);
 }
 
 function goLeft(){
 	transform.Translate(-Vector3.right * MoveSpeed * Time.deltaTime);
-	EnemyBody.transform.localScale = new Vector3(transform.localScale.x,transform.localScale.y,transform.localScale.z);
+	EnemyBody.transform.localScale = new Vector3(-transform.localScale.x,transform.localScale.y,transform.localScale.z);
 }
 
-var enemyInsideJumpZone : boolean;
+
 
 function OnTriggerEnter (other : Collider){
 	var playerScript : player_controller = FindObjectOfType(player_controller);
@@ -202,37 +207,47 @@ function OnTriggerEnter (other : Collider){
 	/*-----------Enemy gets hurt------------*/
 
 
-	if(other.tag == "weapon" && enemyHealth > 0) {
+	if(other.tag == "weapon" && enemyHealth > 0 && GUIScript.gameStart) {
 
-		//Debug.Log(enemyHealth);
-		Debug.Log("hit");
 		//audio.clip = healthSound;
         //audio.Play();
-        Debug.Log(playerScript.damage);
+        var pointsDisplayed : int = 0;
 
         enemyHealth -= playerScript.damage/2;
 
         if (playerScript.movingRight) {
-    	rigidbody.AddRelativeForce (5000, 5000, 0);
+    	rigidbody.AddRelativeForce (50000, 40000, 0);
 	    } else {
-			rigidbody.AddRelativeForce (-5000, 5000, 0);
-	    } 
-	    /*-----------Enemy hit------------*/
+			rigidbody.AddRelativeForce (-50000, 40000, 0);
+	    }
+
+	//check if double or triple points is on
+
+		var pointsTotal : UI.Text;
+
+		var mulitplier : int;
+	    if (GUIScript.triplePtsOn==true){
+			mulitplier = 3;
+		} else if (GUIScript.doublePtsOn==true){
+			mulitplier = 2;
+		} else {
+			mulitplier = 1;
+		}
+	
+	/*-----------Enemy hit------------*/
 
 	    for (var i : int = 0; i<4; i++){
 	        var PointsClone : GameObject;
 			PointsClone = Instantiate(Resources.Load('Prefabs/PopUps/10pts'), Vector3(transform.position.x + Random.Range(0,5), transform.position.y + 1  + Random.Range(0,4), transform.position.z), transform.rotation);
-
-			var pointsTotal = gameObject.Find("PointsText").GetComponent(UI.Text);
-			var pointsHit = Random.Range(1,2);
-			pointsTotal.text = " " + pointsHit;
-			pointsTotal.fontSize = 34;
-			pointsTotal.name = points + i + " ";
-
-			GUIScript.incomingScore += pointsHit;
+			pointsTotal = gameObject.Find("PointsText").GetComponent(UI.Text);
+			var pointsHit = Random.Range(1,4) * mulitplier;
+			pointsTotal.text = pointsHit + "pts";
+			pointsTotal.fontSize = 15;
+			pointsTotal.name = pointsHit + '';
+			GUIScript.incomingScore += pointsHit / mulitplier;
 	    }
 
-		/*-----------Enemy dead------------*/
+	/*-----------Enemy dead------------*/
 
 		var randomSpawnLength =  Random.Range(0, randomSpawn.Length-1);
 		var spawnItem : GameObject;
@@ -251,28 +266,25 @@ function OnTriggerEnter (other : Collider){
 				spawnItem.transform.name = safeName;
 			}
 
-			//check if double or triple points is on
 
-			if (GUIScript.triplePtsOn==true){
-				points = points * 3;
-			} else if (GUIScript.doublePtsOn==true){
-				points = points * 2;
-			}
 
-			// create the text object
+			
+
+		// create the text object
 
 		    PointsClone = Instantiate(Resources.Load('Prefabs/PopUps/10pts'), Vector3(transform.position.x, transform.position.y + 3, transform.position.z - 3), transform.rotation);
 			
-			//add the right amount of points
+		//add the right amount of points to the thing that shows
 
 			pointsTotal = gameObject.Find("PointsText").GetComponent(UI.Text);
-		    pointsTotal.text = " " + points;
+		    pointsTotal.text = " " + points * mulitplier;
 
-		    //add points to total score and killcout then destroy the game object
+		//add points to total score and killcout then destroy the game object
 
-			GUIScript.incomingScore += points;
+			GUIScript.incomingScore += points / mulitplier;
 			GUIScript.killCount+=1;
-			Destroy(transform.root.gameObject);
+			EnemyBody.animation.CrossFade("Death");
+			Destroy(transform.root.gameObject, 7);
 		}
         
 	}
@@ -283,7 +295,7 @@ function OnTriggerEnter (other : Collider){
 	}
 
 	if(other.tag == "enemyJump" && playerAbove && !mallCop && !enemyInsideJumpZone){
-		rigidbody.AddForce (0, 2500, 0);
+		rigidbody.AddForce (0, 10000, 0);
 		Debug.Log("jump");
 		enemyInsideJumpZone = false;
 	}
