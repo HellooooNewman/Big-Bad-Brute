@@ -19,13 +19,16 @@ var shrinkPlayer  : boolean = false;
 var growPlayer  : boolean = false;
 
 function Update(){
-	Destroy(this.gameObject, 15);
+	Destroy(gameObject, 15);
 }
 
 function OnTriggerEnter (other : Collider) {
-	if(other.tag == "Player") {
 
-		var playerScript : player_controller = FindObjectOfType(player_controller);
+	
+
+
+	if(other.tag == "Player") {
+		var playerScript = other.gameObject.GetComponent(player_controller);
 		var GUIScript : scoreManager = FindObjectOfType(scoreManager);
 
 		//extra Life
@@ -92,7 +95,7 @@ function OnTriggerEnter (other : Collider) {
 		}
 
 
-		Destroy(this.gameObject);
+		Destroy(gameObject);
 	}
 }
 

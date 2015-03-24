@@ -11,21 +11,23 @@ private var prefabRandom : int = 1;
 var distance : int;
 
 function Start(){
-	Player = gameObject.Find("MainPlayer");
+	Player = gameObject.Find("MainPlayer1");
 }
 
 function  Update(){
 
 	var GUIScript : scoreManager = FindObjectOfType(scoreManager);
+	Player = FindClosestPlayer();
+	
 	if(GUIScript.gameStart){
 
-		if (GUIScript.score < 100) {
+		if (GUIScript.score1 < 100) {
 			enemyLevel = 0;
-		} else if(GUIScript.score >= 100 && GUIScript.score <= 500){
+		} else if(GUIScript.score1 >= 100 && GUIScript.score1 <= 500){
 			enemyLevel = 1;
-		} else if(GUIScript.score >= 500 && GUIScript.score <= 1000){
+		} else if(GUIScript.score1 >= 500 && GUIScript.score1 <= 1000){
 			enemyLevel = 2;
-		} else if(GUIScript.score > 1000){
+		} else if(GUIScript.score1 > 1000){
 			enemyLevel = 3;
 		}
  
@@ -49,4 +51,24 @@ function  Update(){
 			}	 
 		}
 	}
+}
+
+function FindClosestPlayer () : GameObject {
+  // Find all game objects with tag Enemy
+  var players : GameObject[];
+  players = GameObject.FindGameObjectsWithTag("Player");
+
+  //Debug.Log(spawns = GameObject.FindGameObjectsWithTag("spawn").length;);
+
+  var closest : GameObject; 
+  var distance = Mathf.Infinity; 
+  for (var player : GameObject in players)  { 
+    var diff = (player.transform.position - transform.position);
+    var curDistance = diff.sqrMagnitude; 
+    if (curDistance < distance) { 
+      closest = player; 
+      distance = curDistance; 
+    } 
+  } 
+  return closest;
 }

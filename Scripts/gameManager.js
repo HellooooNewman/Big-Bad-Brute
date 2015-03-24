@@ -10,7 +10,7 @@ var stage : int = 0;
 private var prefabRandom : int = 1;
 
 function Start(){
-	Player = gameObject.Find("MainPlayer");
+	Player = gameObject.Find("MainPlayer1");
 }
 
 function  Update(){
@@ -18,12 +18,12 @@ function  Update(){
 	var GUIScript : scoreManager = FindObjectOfType(scoreManager);
 	if(GUIScript.gameStart){
 
-		if(GUIScript.score >= 100 && GUIScript.score <= 500){
+		if(GUIScript.score1 >= 100 && GUIScript.score1 <= 500){
 			stage = 1;
 			var stage1 = GameObject.Find("stage1").animation.Play();
-		} else if(GUIScript.score >= 500 && GUIScript.score <= 1000){
+		} else if(GUIScript.score1 >= 500 && GUIScript.score1 <= 1000){
 			stage = 2;
-		} else if(GUIScript.score > 1000){
+		} else if(GUIScript.score1 > 1000){
 			stage = 3;
 		}
 

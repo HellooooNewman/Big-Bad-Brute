@@ -4,8 +4,10 @@ var gui : scoreManager;
 
 function MainMenu () {
 	var GUIScript : scoreManager = FindObjectOfType(scoreManager);
+	Debug.Log("pause");
 	GUIScript.pauseToggle = false;
 	Application.LoadLevel("Menu");
+
 }
 
 function Restart () {
@@ -19,8 +21,7 @@ function Resume () {
 }
 
 function pauseAudio(){
-	Debug.Log("pause Audio");
-	var cameraScript = GameObject.FindGameObjectWithTag ("MainCamera");
+	var cameraScript = GameObject.Find("Camera");
 	if (!cameraScript.audio.isPlaying){
 		cameraScript.audio.Play();
 	} else {
